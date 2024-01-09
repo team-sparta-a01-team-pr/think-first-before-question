@@ -5,5 +5,5 @@ import com.sparta.tfbq.domain.question.repository.QuestionRepository
 import org.springframework.stereotype.Service
 
 @Service
-class QuestionService(val questionRepository: QuestionRepository, val memberRepository: MemberRepository) {
+class QuestionService(private val questionRepository: QuestionRepository, private val memberRepository: MemberRepository) {
 }
