@@ -9,6 +9,7 @@ import jakarta.persistence.*
 @Table(name = "questions")
 class Question(
     member: Member,
+    questionTo: Long,
     title: String,
     content: String,
     isPrivate: Boolean = false,
@@ -23,6 +24,10 @@ class Question(
 
     @OneToMany(mappedBy = "question", cascade = [CascadeType.ALL])
     var answers = mutableListOf<Answer>()
+        private set
+
+    @Column(name = "question_to")
+    var questionTo = questionTo
         private set
 
     @ManyToOne(fetch = FetchType.LAZY)
