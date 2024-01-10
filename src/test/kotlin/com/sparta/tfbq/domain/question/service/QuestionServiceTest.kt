@@ -31,9 +31,11 @@ class QuestionServiceTest {
         memberRepository.save(tutor)
 
         // when
-        val request = AddQuestionRequest(2L, "질문 제목 예시", "질문 내용 예시", false)
-        service.addQuestion(student.id!!, request)
-        assertThrows(WrongRoleException::class.java) {service.addQuestion(tutor.id!!, request)}
+        val requestOfStudent = AddQuestionRequest(student.id!!, tutor.id!!, "질문 제목 예시", "질문 내용 예시", false)
+        service.addQuestion(requestOfStudent)
+
+        val requestOfTutor = AddQuestionRequest(tutor.id!!, tutor.id!!, "질문 제목 예시", "질문 내용 예시", false)
+        assertThrows(WrongRoleException::class.java) { service.addQuestion(requestOfTutor) }
 
         // then
         assertThat(student.questions.size).isEqualTo(1)

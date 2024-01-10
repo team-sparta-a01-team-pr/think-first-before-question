@@ -2,6 +2,7 @@ package com.sparta.tfbq.domain.member.model
 
 import com.sparta.tfbq.domain.question.model.Question
 import com.sparta.tfbq.global.entity.BaseEntity
+import com.sparta.tfbq.global.exception.WrongRoleException
 import jakarta.persistence.*
 
 @Entity
@@ -43,4 +44,7 @@ class Member(
     var password = password
         private set
 
+    fun validateRole(role: String) {
+        if (role != this.role.toString()) throw WrongRoleException(this.role.toString())
+    }
 }
