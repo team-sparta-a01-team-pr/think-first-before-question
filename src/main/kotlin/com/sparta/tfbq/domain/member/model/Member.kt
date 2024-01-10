@@ -44,7 +44,10 @@ class Member(
     var password = password
         private set
 
+    fun addQuestion(question: Question) = questions.add(question)
+    fun removeQuestion(question: Question) = questions.remove(question)
+
     fun validateRole(role: String) {
-        if (role != this.role.toString()) throw WrongRoleException(this.role.toString())
+        if (role != this.role.name) throw WrongRoleException(this.role.name)
     }
 }
