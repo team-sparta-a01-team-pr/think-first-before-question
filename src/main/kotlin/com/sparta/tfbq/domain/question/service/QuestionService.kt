@@ -3,7 +3,6 @@ package com.sparta.tfbq.domain.question.service
 import com.sparta.tfbq.domain.member.repository.MemberRepository
 import com.sparta.tfbq.domain.question.dto.request.AddQuestionRequest
 import com.sparta.tfbq.domain.question.dto.request.UpdateQuestionRequest
-import com.sparta.tfbq.domain.question.dto.response.QuestionResponse
 import com.sparta.tfbq.domain.question.repository.QuestionRepository
 import com.sparta.tfbq.global.exception.ModelNotFoundException
 import org.springframework.data.repository.findByIdOrNull
@@ -16,7 +15,7 @@ class QuestionService(
     private val memberRepository: MemberRepository
 ) {
     @Transactional
-    fun addQuestion(request: AddQuestionRequest): QuestionResponse {
+    fun addQuestion(request: AddQuestionRequest): Long {
         val member = memberRepository.findByIdOrNull(request.memberId)
             ?: throw ModelNotFoundException("Member")
         if (!memberRepository.existsById(request.tutorId)) throw ModelNotFoundException("Member")
@@ -26,11 +25,13 @@ class QuestionService(
 
         val question = request.to(member)
         member.addQuestion(question)
+        questionRepository.save(question)
 
-        return QuestionResponse.from(questionRepository.save(question))
+        return question.id!!
     }
 
-    fun updateQuestion(questionId: Long, request: UpdateQuestionRequest): QuestionResponse {
+    @Transactional
+    fun updateQuestion(questionId: Long, request: UpdateQuestionRequest) {
         val member = memberRepository.findByIdOrNull(request.memberId)
             ?: throw ModelNotFoundException("Member")
         val question = questionRepository.findByIdOrNull(questionId)
@@ -46,6 +47,6 @@ class QuestionService(
         question.update(request.title, request.content, request.isPrivate)
         member.addQuestion(question)
 
-        return QuestionResponse.from(questionRepository.save(question))
+        questionRepository.save(question)
     }
 }
