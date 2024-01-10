@@ -4,7 +4,7 @@ import com.sparta.tfbq.domain.answer.model.Answer
 import com.sparta.tfbq.domain.question.model.Question
 import java.time.LocalDateTime
 
-class QuestionResponse(
+data class QuestionResponse(
     val id: Long?,
     val questionTo: Long,
     val title: String,
