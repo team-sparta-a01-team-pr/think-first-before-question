@@ -87,4 +87,26 @@ class QuestionServiceTest {
         // then (예외)
         assertThrows(AlreadyHaveAnswersException::class.java) { service.updateQuestion(question.id!!, updateRequest) }
     }
+
+    @Test
+    fun deleteQuestion() {
+        // given
+        val student = memberRepository.findByIdOrNull(1L) ?: throw ModelNotFoundException("")
+        val tutor = memberRepository.findByIdOrNull(2L) ?: throw ModelNotFoundException("")
+
+        val requestOfStudent = AddQuestionRequest(student.id!!, tutor.id!!, "질문 제목 예시", "질문 내용 예시", false)
+        service.addQuestion(requestOfStudent)
+
+        val question = questionRepository.findByIdOrNull(1L) ?: throw ModelNotFoundException("")
+
+        // when
+        question.answers.add(Answer("답변 예시", question))
+        question.answers.add(Answer("답변 예시2", question))
+        service.deleteQuestion(student.id!!, question.id!!)
+
+        // then
+        assertThat(student.questions.size).isEqualTo(0)
+        assertThrows(ModelNotFoundException::class.java) {
+            questionRepository.findByIdOrNull(1L) ?: throw ModelNotFoundException("") }
+    }
 }
