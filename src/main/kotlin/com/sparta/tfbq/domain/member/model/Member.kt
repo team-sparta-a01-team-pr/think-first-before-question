@@ -48,6 +48,6 @@ class Member(
     fun removeQuestion(question: Question) = questions.remove(question)
 
     fun validateRole(role: String) {
-        if (role != this.role.toString()) throw WrongRoleException(this.role.toString())
+        if (role != this.role.name) throw WrongRoleException(this.role.name)
     }
 }
