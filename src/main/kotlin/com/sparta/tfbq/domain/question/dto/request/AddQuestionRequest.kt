@@ -1,8 +1,9 @@
 package com.sparta.tfbq.domain.question.dto.request
 
 data class AddQuestionRequest (
+    val memberId: Long,
     val tutorId: Long,
-    var title: String,
-    var content: String,
-    var isPrivate: Boolean
+    val title: String,
+    val content: String,
+    val isPrivate: Boolean
 )

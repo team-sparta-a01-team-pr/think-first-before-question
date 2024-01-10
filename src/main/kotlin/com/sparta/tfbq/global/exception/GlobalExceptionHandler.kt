@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
-    @ExceptionHandler(WrongRoleException::class)
-    fun handleWrongRoleException(e: Exception)
+    fun handleWrongRoleException(e: WrongRoleException)
+    = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
+
+    fun handleModelNotFoundException(e: ModelNotFoundException)
     = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
 }
