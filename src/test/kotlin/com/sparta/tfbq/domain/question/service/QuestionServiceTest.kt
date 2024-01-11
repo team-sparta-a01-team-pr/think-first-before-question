@@ -1,6 +1,7 @@
 package com.sparta.tfbq.domain.question.service
 
 import com.sparta.tfbq.domain.answer.model.Answer
+import com.sparta.tfbq.domain.answer.repository.AnswerRepository
 import com.sparta.tfbq.domain.member.model.Member
 import com.sparta.tfbq.domain.member.model.MemberRole
 import com.sparta.tfbq.domain.member.repository.MemberRepository
@@ -31,6 +32,9 @@ class QuestionServiceTest {
 
     @Autowired
     lateinit var questionRepository: QuestionRepository
+
+    @Autowired
+    lateinit var answerRepository: AnswerRepository
 
     @BeforeEach
     fun test() {
@@ -86,5 +90,34 @@ class QuestionServiceTest {
 
         // then (예외)
         assertThrows(AlreadyHaveAnswersException::class.java) { service.updateQuestion(question.id!!, updateRequest) }
+    }
+
+    @Test
+    fun deleteQuestion() {
+        // given
+        val student = memberRepository.findByIdOrNull(1L) ?: throw ModelNotFoundException("")
+        val tutor = memberRepository.findByIdOrNull(2L) ?: throw ModelNotFoundException("")
+
+        val requestOfStudent = AddQuestionRequest(student.id!!, tutor.id!!, "질문 제목 예시", "질문 내용 예시", false)
+        service.addQuestion(requestOfStudent)
+
+        val question = questionRepository.findByIdOrNull(1L) ?: throw ModelNotFoundException("")
+
+        // when
+        val answer1 = Answer("답변 예시", question)
+        val answer2 = Answer("답변 예시 2", question)
+
+        answerRepository.save(answer1)
+        answerRepository.save(answer2)
+
+        question.answers.add(answer1)
+        question.answers.add(answer2)
+
+        service.deleteQuestion(student.id!!, question.id!!)
+
+        // then
+        assertThat(student.questions.size).isEqualTo(0)
+        assertThrows(ModelNotFoundException::class.java) {
+            questionRepository.findByIdOrNull(1L) ?: throw ModelNotFoundException("") }
     }
 }

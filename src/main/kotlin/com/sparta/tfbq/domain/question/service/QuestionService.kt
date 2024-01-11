@@ -49,4 +49,18 @@ class QuestionService(
 
         questionRepository.save(question)
     }
+
+    @Transactional
+    fun deleteQuestion(memberId: Long, questionId: Long) {
+        val member = memberRepository.findByIdOrNull(memberId)
+            ?: throw ModelNotFoundException("Member")
+        val question = questionRepository.findByIdOrNull(questionId)
+            ?: throw ModelNotFoundException("Question")
+
+        // 질문 삭제는 학생만 할 수 있다
+        member.validateRole("STUDENT")
+
+        member.removeQuestion(question)
+        questionRepository.delete(question)
+    }
 }
