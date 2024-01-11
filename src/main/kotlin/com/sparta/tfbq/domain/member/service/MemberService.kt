@@ -1,9 +1,13 @@
 package com.sparta.tfbq.domain.member.service
 
 import com.sparta.tfbq.domain.member.dto.response.MemberResponse
+import com.sparta.tfbq.domain.member.dto.response.TutorInfoResponse
+import com.sparta.tfbq.domain.member.model.Member
 import com.sparta.tfbq.domain.member.model.MemberRole
 import com.sparta.tfbq.domain.member.repository.MemberRepository
+import com.sparta.tfbq.domain.question.dto.response.QuestionResponse
 import jakarta.transaction.Transactional
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 
@@ -28,5 +32,12 @@ class MemberService(
             .map { MemberResponse.from(it) }
 
         return memberList
+    }
+
+    fun findTutorInfo(tutorId: Long): TutorInfoResponse {
+        val member: Member = memberRepository.findByIdOrNull(tutorId) ?: throw Exception()
+        val questions = member.questions.map { QuestionResponse.from(it) }
+
+        return TutorInfoResponse.from(member, questions)
     }
 }
