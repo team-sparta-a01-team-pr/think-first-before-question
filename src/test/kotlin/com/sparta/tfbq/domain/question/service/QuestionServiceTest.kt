@@ -33,6 +33,9 @@ class QuestionServiceTest {
     @Autowired
     lateinit var questionRepository: QuestionRepository
 
+    @Autowired
+    lateinit var answerRepository: AnswerRepository
+
     @BeforeEach
     fun test() {
         val student = Member("John", "john@gmail.com", "존", MemberRole.STUDENT, "1234")
@@ -101,8 +104,15 @@ class QuestionServiceTest {
         val question = questionRepository.findByIdOrNull(1L) ?: throw ModelNotFoundException("")
 
         // when
-        question.answers.add(Answer("답변 예시", question))
-        question.answers.add(Answer("답변 예시2", question))
+        val answer1 = Answer("답변 예시", question)
+        val answer2 = Answer("답변 예시 2", question)
+
+        answerRepository.save(answer1)
+        answerRepository.save(answer2)
+
+        question.answers.add(answer1)
+        question.answers.add(answer2)
+
         service.deleteQuestion(student.id!!, question.id!!)
 
         // then
