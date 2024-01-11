@@ -28,7 +28,7 @@ class MemberController (
     }
 
     @GetMapping("/tutors")
-    fun findTutors (): ResponseEntity<List<MemberResponse>>{
+    fun findTutors(): ResponseEntity<List<MemberResponse>>{
           return ResponseEntity
               .status(HttpStatus.OK)
               .body(memberService.findTutors())
