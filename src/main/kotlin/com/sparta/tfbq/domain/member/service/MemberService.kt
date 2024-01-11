@@ -1,6 +1,7 @@
 package com.sparta.tfbq.domain.member.service
 
 import com.sparta.tfbq.domain.member.dto.response.MemberResponse
+import com.sparta.tfbq.domain.member.model.MemberRole
 import com.sparta.tfbq.domain.member.repository.MemberRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
@@ -23,8 +24,9 @@ class MemberService(
 
     @Transactional
     fun findTutors() : List<MemberResponse> {
-        val memberList = memberRepository.findAll().map { MemberResponse.from(it) }
-            .filter { it.role == "TUTOR" }
+        val memberList = memberRepository.findAll().filter { it.role == MemberRole.TUTOR }
+            .map { MemberResponse.from(it) }
+
         return memberList
     }
 }
