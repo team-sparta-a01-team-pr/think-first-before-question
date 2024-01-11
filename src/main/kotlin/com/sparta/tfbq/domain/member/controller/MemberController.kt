@@ -19,7 +19,7 @@ class MemberController (
         return ResponseEntity.ok().build()
      }
 
-    @GetMapping("/check")
+    @GetMapping("/check/temp")
     fun checkNickname (@RequestParam("nickname") nickname: String): ResponseEntity<Unit>{
         memberService.checkNickname(nickname)
         return ResponseEntity.ok().build()
