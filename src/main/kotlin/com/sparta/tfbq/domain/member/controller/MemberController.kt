@@ -1,13 +1,11 @@
 package com.sparta.tfbq.domain.member.controller
 
 import com.sparta.tfbq.domain.member.dto.response.MemberResponse
+import com.sparta.tfbq.domain.member.dto.response.TutorInfoResponse
 import com.sparta.tfbq.domain.member.service.MemberService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/members")
@@ -32,6 +30,13 @@ class MemberController (
           return ResponseEntity
               .status(HttpStatus.OK)
               .body(memberService.findTutors())
+    }
+
+    @GetMapping("/{tutorId}")
+    fun findTutorInfo(@PathVariable tutorId: Long): ResponseEntity<TutorInfoResponse> {
+        val response: TutorInfoResponse = memberService.findTutorInfo(tutorId)
+
+        return ResponseEntity.ok(response)
     }
 
 }
