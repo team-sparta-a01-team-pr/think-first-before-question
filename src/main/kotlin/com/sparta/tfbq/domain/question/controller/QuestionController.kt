@@ -17,8 +17,17 @@ class QuestionController(private val service: QuestionService) {
     }
 
     @PutMapping("/{questionId}")
-    fun updateQuestion(@RequestBody request: UpdateQuestionRequest, @PathVariable questionId: Long): ResponseEntity<Unit> {
+    fun updateQuestion(
+        @RequestBody request: UpdateQuestionRequest,
+        @PathVariable questionId: Long
+    ): ResponseEntity<Unit> {
         service.updateQuestion(questionId, request)
         return ResponseEntity.ok().build()
+    }
+
+    @DeleteMapping("/{memberId}/{questionId}")
+    fun deleteQuestion(@PathVariable memberId: Long, @PathVariable questionId: Long): ResponseEntity<Unit> {
+        service.deleteQuestion(memberId, questionId)
+        return ResponseEntity.noContent().build()
     }
 }

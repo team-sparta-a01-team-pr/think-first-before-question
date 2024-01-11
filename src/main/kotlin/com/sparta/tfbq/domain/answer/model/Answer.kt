@@ -29,5 +29,4 @@ class Answer(
     @Column(name = "created_at", columnDefinition = "TIMESTAMP(6)", nullable = false, updatable = false)
     var createdAt = LocalDateTime.now()
         private set
-
 }
