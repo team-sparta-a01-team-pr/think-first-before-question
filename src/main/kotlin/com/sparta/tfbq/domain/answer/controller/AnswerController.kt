@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.net.URI
 
 @RestController
-@RequestMapping("/api/v1/questions/{questionId}")
+@RequestMapping("/api/v1/answers/{questionId}")
 class AnswerController(private val answerService: AnswerService) {
     @PostMapping
     fun addAnswer(@PathVariable questionId: Long, @RequestBody request: AddAnswerRequest): ResponseEntity<Unit> {
