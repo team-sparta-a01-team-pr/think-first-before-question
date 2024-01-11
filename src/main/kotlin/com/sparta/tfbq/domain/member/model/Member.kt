@@ -2,7 +2,8 @@ package com.sparta.tfbq.domain.member.model
 
 import com.sparta.tfbq.domain.question.model.Question
 import com.sparta.tfbq.global.entity.BaseEntity
-import com.sparta.tfbq.global.exception.WrongRoleException
+import com.sparta.tfbq.global.util.PasswordEncoder.Companion.encode
+import com.sparta.tfbq.global.util.RandomNicknameGenerator.Companion.generateRandomNickname
 import jakarta.persistence.*
 
 @Entity
@@ -10,7 +11,7 @@ import jakarta.persistence.*
 class Member(
     name: String,
     email: String,
-    nickname: String,
+    nickname: String?,
     memberRole: MemberRole,
     password: String
 ) : BaseEntity() {
@@ -21,33 +22,38 @@ class Member(
     var id: Long? = null
         private set
 
-    @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "member")
     val questions = mutableListOf<Question>()
 
     @Column(name = "name")
     var name = name
         private set
 
-    @Column(name = "nickname")
-    var nickname = nickname
+    @Column(name = "nickname", unique = true)
+    var nickname = nickname ?: makeNickname()
         private set
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     val role = memberRole
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     var email = email
         private set
 
     @Column(name = "password")
-    var password = password
+    var password = encode(password)
         private set
 
+    private fun makeNickname(): String? {
+        return when (role) {
+            MemberRole.STUDENT -> generateRandomNickname()
+            MemberRole.TUTOR -> null
+        }
+    }
+
     fun addQuestion(question: Question) = questions.add(question)
+
     fun removeQuestion(question: Question) = questions.remove(question)
 
-    fun validateRole(role: String) {
-        if (role != this.role.name) throw WrongRoleException(this.role.name)
-    }
 }
