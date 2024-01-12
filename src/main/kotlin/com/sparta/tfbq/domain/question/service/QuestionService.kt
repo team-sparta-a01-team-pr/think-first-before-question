@@ -58,6 +58,14 @@ class QuestionService(
         val member = getMember(memberId)
         val question = getQuestion(questionId)
 
+        /*
+        memberId로 member를 가져오면?
+        '삭제' 버튼을 누른 사람
+
+        questionId->question->member->id로 member를 가져오면?
+        질문 등록한 사람
+         */
+
         // 질문 삭제는 학생만 할 수 있다
         validateRole(member.role)
 
