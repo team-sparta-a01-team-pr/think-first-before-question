@@ -56,6 +56,8 @@ class Question(
         if (this.answers.size > 0) throw AlreadyHaveAnswersException()
     }
 
+    fun addAnswer(answer: Answer) = this.answers.add(answer)
+
     fun update(title: String, content: String, isPrivate: Boolean) {
         this.title = title
         this.content = content
