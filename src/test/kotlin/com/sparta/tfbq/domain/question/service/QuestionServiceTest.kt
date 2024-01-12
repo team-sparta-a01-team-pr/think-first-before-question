@@ -77,7 +77,7 @@ class QuestionServiceTest {
         val question = questionRepository.findByIdOrNull(1L) ?: throw ModelNotFoundException("")
 
         // when (정상 처리)
-        val updateRequest = UpdateQuestionRequest(student.id!!, tutor.id!!, "수정된 제목 예시", "수정된 내용 예시", true)
+        val updateRequest = UpdateQuestionRequest(student.id!!,"수정된 제목 예시", "수정된 내용 예시", true)
         service.updateQuestion(question.id!!, updateRequest)
 
         // then (정상 처리)

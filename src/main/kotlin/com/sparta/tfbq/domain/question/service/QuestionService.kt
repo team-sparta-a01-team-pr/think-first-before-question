@@ -39,8 +39,6 @@ class QuestionService(
         val member = getMember(request.memberId)
         val question = getQuestion(questionId)
 
-        // 질문 대상(튜터)을 옳게 설정했는지 확인
-        validateAvailableTutor(request.tutorId)
         // 질문 수정은 학생만 할 수 있다
         validateRole(member.role)
         // 질문에 답변이 1개 이상 존재하는 경우, 학생은 질문을 수정할 수 없다
@@ -57,14 +55,6 @@ class QuestionService(
     fun deleteQuestion(memberId: Long, questionId: Long) {
         val member = getMember(memberId)
         val question = getQuestion(questionId)
-
-        /*
-        memberId로 member를 가져오면?
-        '삭제' 버튼을 누른 사람
-
-        questionId->question->member->id로 member를 가져오면?
-        질문 등록한 사람
-         */
 
         // 질문 삭제는 학생만 할 수 있다
         validateRole(member.role)
