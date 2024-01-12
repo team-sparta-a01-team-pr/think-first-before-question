@@ -1,7 +1,7 @@
 package com.sparta.tfbq.domain.question.model
 
 import com.sparta.tfbq.domain.answer.model.Answer
-import com.sparta.tfbq.domain.member.model.Member
+import com.sparta.tfbq.domain.member.Member
 import com.sparta.tfbq.global.entity.BaseEntity
 import jakarta.persistence.*
 
@@ -56,4 +56,17 @@ class Question(
         this.content = content
         this.isPrivate = isPrivate
     }
+
+    fun addMember(member: Member) {
+        this.member.let {
+            member.questions.remove(this)
+        }
+        this.member = member
+        member.questions.add(this)
+    }
+
+    fun removeMember() {
+        this.member.questions.remove(this)
+    }
+
 }

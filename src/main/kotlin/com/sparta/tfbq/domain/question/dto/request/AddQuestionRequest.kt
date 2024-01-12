@@ -1,6 +1,6 @@
 package com.sparta.tfbq.domain.question.dto.request
 
-import com.sparta.tfbq.domain.member.model.Member
+import com.sparta.tfbq.domain.member.Member
 import com.sparta.tfbq.domain.question.model.Question
 
 data class AddQuestionRequest(

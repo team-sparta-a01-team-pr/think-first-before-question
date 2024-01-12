@@ -29,4 +29,16 @@ class Answer(
     @Column(name = "created_at", columnDefinition = "TIMESTAMP(6)", nullable = false, updatable = false)
     var createdAt = LocalDateTime.now()
         private set
+
+    fun addQuestion(question: Question) {
+        this.question.let {
+            question.answers.remove(this)
+        }
+        this.question = question
+        question.answers.add(this)
+    }
+
+    fun removeQuestion() {
+        this.question.answers.remove(this)
+    }
 }

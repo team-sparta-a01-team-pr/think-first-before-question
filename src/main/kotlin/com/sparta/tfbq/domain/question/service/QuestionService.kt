@@ -28,7 +28,7 @@ class QuestionService(
         validateRole(member.role)
 
         val question = request.to(member)
-        member.addQuestion(question)
+        question.addMember(member)
         questionRepository.save(question)
 
         return question.id!!
@@ -44,11 +44,7 @@ class QuestionService(
         // 질문에 답변이 1개 이상 존재하는 경우, 학생은 질문을 수정할 수 없다
         validateAvailabilityToUpdate(question)
 
-        member.removeQuestion(question)
         question.update(request.title, request.content, request.isPrivate)
-        member.addQuestion(question)
-
-        questionRepository.save(question)
     }
 
     @Transactional
@@ -59,7 +55,7 @@ class QuestionService(
         // 질문 삭제는 학생만 할 수 있다
         validateRole(member.role)
 
-        member.removeQuestion(question)
+        question.removeMember()
         questionRepository.delete(question)
     }
 
@@ -70,7 +66,7 @@ class QuestionService(
         questionRepository.findByIdOrNull(questionId) ?: throw ModelNotFoundException("Question")
 
     private fun validateRole(role: MemberRole) {
-        if (MemberRole.isTutor(role)) throw WrongRoleException(role.name)
+        if (MemberRole.isTutor(role)) throw WrongRoleException("학생에게만 질문 작성 권한이 있습니다.")
     }
 
     private fun validateAvailabilityToUpdate(question: Question) {
@@ -80,4 +76,5 @@ class QuestionService(
     private fun validateAvailableTutor(tutorId: Long){
         if (!memberRepository.existsById(tutorId)) throw ModelNotFoundException("Member")
     }
+
 }
