@@ -52,10 +52,6 @@ class Question(
     var isClose = isClose
         private set
 
-    fun availableToUpdate() {
-        if (this.answers.size > 0) throw AlreadyHaveAnswersException()
-    }
-
     fun update(title: String, content: String, isPrivate: Boolean) {
         this.title = title
         this.content = content
