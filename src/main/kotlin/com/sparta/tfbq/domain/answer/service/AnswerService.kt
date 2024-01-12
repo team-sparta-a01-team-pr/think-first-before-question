@@ -26,7 +26,7 @@ class AnswerService(
         validateRole(member.role)
 
         val answer = request.to(question)
-        question.addAnswer(answer)
+        answer.addQuestion(question)
         answerRepository.save(answer)
 
         return answer.id!!
@@ -39,6 +39,6 @@ class AnswerService(
         questionRepository.findByIdOrNull(questionId) ?: throw ModelNotFoundException("Question")
 
     private fun validateRole(role: MemberRole) {
-        if (MemberRole.isStudent(role)) throw WrongRoleException(role.name)
+        if (MemberRole.isStudent(role)) throw WrongRoleException("튜터에게만 답변 작성 권한이 있습니다.")
     }
 }
