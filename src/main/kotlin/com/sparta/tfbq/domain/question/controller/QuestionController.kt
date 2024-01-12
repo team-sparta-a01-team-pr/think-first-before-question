@@ -25,8 +25,11 @@ class QuestionController(private val service: QuestionService) {
         return ResponseEntity.ok().build()
     }
 
-    @DeleteMapping("/{memberId}/{questionId}")
-    fun deleteQuestion(@PathVariable memberId: Long, @PathVariable questionId: Long): ResponseEntity<Unit> {
+    @DeleteMapping("/{questionId}/{memberId}")
+    fun deleteQuestion(
+        @PathVariable memberId: Long,
+        @PathVariable questionId: Long
+    ): ResponseEntity<Unit> {
         service.deleteQuestion(memberId, questionId)
         return ResponseEntity.noContent().build()
     }

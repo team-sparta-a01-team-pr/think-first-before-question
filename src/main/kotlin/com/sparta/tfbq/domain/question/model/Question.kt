@@ -3,7 +3,6 @@ package com.sparta.tfbq.domain.question.model
 import com.sparta.tfbq.domain.answer.model.Answer
 import com.sparta.tfbq.domain.member.model.Member
 import com.sparta.tfbq.global.entity.BaseEntity
-import com.sparta.tfbq.global.exception.AlreadyHaveAnswersException
 import jakarta.persistence.*
 
 @Entity
@@ -51,12 +50,6 @@ class Question(
     @Column(name = "is_close")
     var isClose = isClose
         private set
-
-    fun availableToUpdate() {
-        if (this.answers.size > 0) throw AlreadyHaveAnswersException()
-    }
-
-    fun addAnswer(answer: Answer) = this.answers.add(answer)
 
     fun update(title: String, content: String, isPrivate: Boolean) {
         this.title = title
