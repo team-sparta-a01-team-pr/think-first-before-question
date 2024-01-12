@@ -1,12 +1,12 @@
-package com.sparta.tfbq.domain.member.dto.request
+package com.sparta.tfbq.domain.member.domain.tutor.dto.request
 
-import com.sparta.tfbq.domain.member.model.Member
+import com.sparta.tfbq.domain.member.Member
 import com.sparta.tfbq.domain.member.model.MemberRole
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 
-data class MemberCreateRequest(
+data class TutorCreateRequest(
     @field:Email(message = "올바른 이메일 형식을 입력해주세요")
     @field:NotBlank(message = "이메일은 필수입력 사항입니다")
     val email: String,
@@ -18,12 +18,7 @@ data class MemberCreateRequest(
         regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}${'$'}",
         message = "비밀번호는 영문과 특수문자 숫자를 포함하며 8자 이상이어야 합니다"
     )
-    val password: String,
-
-    @field:NotBlank(message = "역할은 필수입력 사항입니다")
-    val role: MemberRole,
-
-    val nickname: String?,
+    val password: String
 ) {
 
     fun toEntity() =
@@ -31,8 +26,8 @@ data class MemberCreateRequest(
             email = email,
             name = name,
             password = password,
-            memberRole = role,
-            nickname = nickname
+            nickname = null,
+            memberRole = MemberRole.TUTOR
         )
 
 }
