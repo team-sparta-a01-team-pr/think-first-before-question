@@ -1,5 +1,6 @@
-package com.sparta.tfbq.domain.member.model
+package com.sparta.tfbq.domain.member
 
+import com.sparta.tfbq.domain.member.model.MemberRole
 import com.sparta.tfbq.domain.question.model.Question
 import com.sparta.tfbq.global.entity.BaseEntity
 import com.sparta.tfbq.global.util.PasswordEncoder.Companion.encode
@@ -22,7 +23,7 @@ class Member(
     var id: Long? = null
         private set
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
     val questions = mutableListOf<Question>()
 
     @Column(name = "name")
@@ -30,7 +31,7 @@ class Member(
         private set
 
     @Column(name = "nickname", unique = true)
-    var nickname = nickname ?: makeNickname()
+    var nickname = nickname
         private set
 
     @Enumerated(EnumType.STRING)
@@ -45,15 +46,8 @@ class Member(
     var password = encode(password)
         private set
 
-    private fun makeNickname(): String? {
-        return when (role) {
-            MemberRole.STUDENT -> generateRandomNickname()
-            MemberRole.TUTOR -> null
-        }
+    fun makeNickname() {
+        this.nickname = generateRandomNickname()
     }
-
-    fun addQuestion(question: Question) = questions.add(question)
-
-    fun removeQuestion(question: Question) = questions.remove(question)
 
 }

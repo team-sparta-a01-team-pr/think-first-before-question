@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface QuestionRepository : JpaRepository<Question, Long> {
+    fun findAllByQuestionTo(questionTo: Long): List<Question>
 }

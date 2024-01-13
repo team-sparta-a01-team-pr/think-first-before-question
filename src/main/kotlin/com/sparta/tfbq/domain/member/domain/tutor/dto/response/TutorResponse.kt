@@ -1,26 +1,26 @@
-package com.sparta.tfbq.domain.member.dto.response
+package com.sparta.tfbq.domain.member.domain.tutor.dto.response
 
-import com.sparta.tfbq.domain.member.model.Member
+import com.sparta.tfbq.domain.member.Member
 import com.sparta.tfbq.domain.question.dto.response.QuestionResponse
 
-open class MemberResponse(
-    open val email: String,
-    open val name: String,
+data class TutorResponse(
+    val email: String,
+    val name: String,
+    val questions: List<QuestionResponse>? = emptyList()
 ) {
+
     companion object {
         fun from(member: Member) =
-            StudentInfoResponse(
+            TutorResponse(
                 email = member.email,
                 name = member.name,
-                nickname = member.nickname!!
             )
 
         fun from(member: Member, questions: List<QuestionResponse>) =
-            TutorInfoResponse(
+            TutorResponse(
                 email = member.email,
                 name = member.name,
                 questions = questions
             )
     }
-
 }
