@@ -58,6 +58,11 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:5.8.0")
     testImplementation("io.mockk:mockk:1.13.8")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.1")
+    // JWT
+    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
+
 }
 
 tasks.withType<KotlinCompile> {

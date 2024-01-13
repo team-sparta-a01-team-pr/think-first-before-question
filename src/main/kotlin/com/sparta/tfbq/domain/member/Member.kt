@@ -4,7 +4,6 @@ import com.sparta.tfbq.domain.member.model.MemberRole
 import com.sparta.tfbq.domain.question.model.Question
 import com.sparta.tfbq.global.entity.BaseEntity
 import com.sparta.tfbq.global.util.PasswordEncoder.Companion.encode
-import com.sparta.tfbq.global.util.RandomNicknameGenerator.Companion.generateRandomNickname
 import jakarta.persistence.*
 
 @Entity
@@ -45,9 +44,5 @@ class Member(
     @Column(name = "password")
     var password = encode(password)
         private set
-
-    fun makeNickname() {
-        this.nickname = generateRandomNickname()
-    }
 
 }
