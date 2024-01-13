@@ -2,6 +2,7 @@ package com.sparta.tfbq.domain.member.domain.student.dto.request
 
 import com.sparta.tfbq.domain.member.Member
 import com.sparta.tfbq.domain.member.model.MemberRole
+import com.sparta.tfbq.global.util.RandomNicknameGenerator.generateRandomNickname
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
@@ -28,7 +29,7 @@ data class StudentCreateRequest(
             email = email,
             name = name,
             password = password,
-            nickname = nickname,
+            nickname = nickname ?: generateRandomNickname(),
             memberRole = MemberRole.STUDENT
         )
 

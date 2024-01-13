@@ -19,7 +19,6 @@ class StudentService(
     @Transactional
     fun signUp(request: StudentCreateRequest): Long {
         val member = memberRepository.save(request.toEntity())
-        member.nickname ?: member.makeNickname()
         return member.id!!
     }
 
