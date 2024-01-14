@@ -3,7 +3,7 @@ package com.sparta.tfbq.domain.member
 import com.sparta.tfbq.domain.member.model.MemberRole
 import com.sparta.tfbq.domain.question.model.Question
 import com.sparta.tfbq.global.entity.BaseEntity
-import com.sparta.tfbq.global.util.PasswordEncoder.Companion.encode
+import com.sparta.tfbq.global.util.PasswordEncoder.encode
 import jakarta.persistence.*
 
 @Entity
@@ -45,4 +45,11 @@ class Member(
     var password = encode(password)
         private set
 
+    @Column(name = "refresh_token")
+    var refreshToken: String? = null
+        private set
+
+    fun updateRefreshToken(refreshToken: String) {
+        this.refreshToken = refreshToken
+    }
 }
