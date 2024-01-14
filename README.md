@@ -15,7 +15,7 @@
 |-----------------------------------------------------------|---------------------------------------------------------|------------------------------------------------------------|------------------------------------------------------------|
 | ![](https://avatars.githubusercontent.com/u/84169773?v=4) | ![](https://avatars.githubusercontent.com/u/152062846?v=4) | ![](https://avatars.githubusercontent.com/u/152145394?v=4) | ![](https://avatars.githubusercontent.com/u/152155627?v=4) |
 | [@back-seung](https://github.com/back-seung)              | [@hunzzzzz](https://github.com/hunzzzzz)                | [@distecter](https://github.com/distecter/distecter)       | [@jiyeong2023](https://github.com/jiyeong2023)             |
-| `팀 리드`, `전체 기능 리팩터링`, `버그 픽스`, `팀 컨벤션 관리`                 | `질문 & 답변 CRUD`, `버그 픽스`                                 | `멤버 CRUD`                                                    | `멤버 CRUD`                                                    |
+| `팀 리드`, `전체 기능 리팩터링`, `버그 픽스`, `팀 컨벤션 관리`, `인증/인가`                 | `질문 & 답변 CRUD`, `버그 픽스`                                 | `멤버 CRUD`                                                    | `멤버 CRUD`                                                    |
 
 ## 🛠️ 개발 도구 및 환경
 <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white">
@@ -38,52 +38,59 @@
 ├── .idea
 ├── .gradle
 └── src.main.kotlin
-    └── com.sparta.tfbq
-        ├── domain
-        │   ├── answer
-        │   │   ├── controller
-        │   │   ├── dto
-        │   │   │   ├── request
-        │   │   │   └── response
-        │   │   ├── model
-        │   │   ├── repository
-        │   │   └── service
-        │   ├── member
-        │   │   ├── common
-        │   │   │   ├── controller
-        │   │   │   └── service
-        │   │   ├── domain
-        │   │   │   ├── student
-        │   │   │   │   ├── controller
-        │   │   │   │   ├── dto
-        │   │   │   │   │ ├── request
-        │   │   │   │   │ └── response
-        │   │   │   │   └── service
-        │   │   │   └── tutor
-        │   │   │   ├── controller
-        │   │   │   ├── dto
-        │   │   │   │   ├── request
-        │   │   │   │   └── response
-        │   │   │   └── service
-        │   │   ├── exception
-        │   │   ├── model
-        │   │   ├── repository
-        │   │   └── Member.kt
-        │   └── question
-        │   ├── controller
-        │   ├── dto
-        │   │   ├── request
-        │   │   └── response
-        │   ├── model
-        │   ├── repository
-        │   └── service
-        └── global
-                ├── config
-                ├── entity
-                ├── exception
-                ├── infra
-                │   └── swagger
-                └── util
+└── com.sparta.tfbq
+├── domain
+│   ├── auth
+│   │   ├── controller
+│   │   ├── dto
+│   │   │   ├── request
+│   │   │   └── response
+│   │   ├── filter
+│   │   ├── model
+│   │   └── service
+│   ├── answer
+│   │   ├── controller
+│   │   ├── dto
+│   │   │   ├── request
+│   │   │   └── response
+│   │   ├── model
+│   │   ├── repository
+│   │   └── service
+│   ├── member
+│   │   ├── common
+│   │   │   ├── controller
+│   │   │   └── service
+│   │   ├── domain
+│   │   │   ├── student
+│   │   │   │   ├── controller
+│   │   │   │   ├── dto
+│   │   │   │   │ ├── request
+│   │   │   │   │ └── response
+│   │   │   │   └── service
+│   │   │   └── tutor
+│   │   │   ├── controller
+│   │   │   ├── dto
+│   │   │   │   ├── request
+│   │   │   │   └── response
+│   │   │   └── service
+│   │   ├── exception
+│   │   ├── model
+│   │   ├── repository
+│   │   └── Member.kt
+│   └── question
+│   ├── controller
+│   ├── dto
+│   │   ├── request
+│   │   └── response
+│   ├── model
+│   ├── repository
+│   └── service
+└── global
+├── auth
+├── config
+├── entity
+├── exception
+└── util
 ```
 
 ## 🤝 팀 컨벤션
