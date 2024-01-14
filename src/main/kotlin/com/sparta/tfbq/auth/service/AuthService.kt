@@ -7,6 +7,7 @@ import com.sparta.tfbq.domain.member.Member
 import com.sparta.tfbq.domain.member.repository.MemberRepository
 import com.sparta.tfbq.global.auth.JwtUtil.createJwt
 import com.sparta.tfbq.global.auth.JwtUtil.getClaims
+import com.sparta.tfbq.global.exception.ModelNotFoundException
 import com.sparta.tfbq.global.util.PasswordEncoder.encode
 import org.springframework.stereotype.Service
 
@@ -14,6 +15,11 @@ import org.springframework.stereotype.Service
 class AuthService(
     private val memberRepository: MemberRepository
 ) {
+
+    fun saveRefreshToken(jwt: JwtResponse) {
+        val member = getMemberByEmail(getClaims(jwt.accessToken)["email"] as String)
+        member.updateRefreshToken(jwt.refreshToken)
+    }
 
     fun refreshToken(request: TokenRefreshRequest): JwtResponse {
         val member = verifyMember(request.refreshToken)
@@ -31,6 +37,10 @@ class AuthService(
     fun verifyMember(request: MemberLoginRequest): Member {
         return memberRepository.findByEmailAndPassword(request.email, encode(request.password))
             ?: throw RuntimeException()
+    }
+
+    fun getMemberByEmail(email: String): Member {
+        return memberRepository.findByEmail(email) ?: throw ModelNotFoundException("Member")
     }
 
 }

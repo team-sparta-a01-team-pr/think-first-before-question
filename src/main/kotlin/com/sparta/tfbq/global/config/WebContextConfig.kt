@@ -25,9 +25,12 @@ class WebContextConfig {
     }
 
     @Bean
-    fun jwtFilter(objectMapper: ObjectMapper): FilterRegistrationBean<Filter> {
+    fun jwtFilter(
+        objectMapper: ObjectMapper,
+        authService: AuthService
+    ): FilterRegistrationBean<Filter> {
         val filterRegistrationBean = FilterRegistrationBean<Filter>()
-        filterRegistrationBean.filter = JwtFilter(objectMapper)
+        filterRegistrationBean.filter = JwtFilter(objectMapper, authService)
         filterRegistrationBean.order = 2
         filterRegistrationBean.urlPatterns = listOf("/api/v1/auth/login")
         return filterRegistrationBean
