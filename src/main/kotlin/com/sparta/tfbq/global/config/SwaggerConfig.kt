@@ -1,4 +1,4 @@
-package com.sparta.tfbq.global.infra.swagger
+package com.sparta.tfbq.global.config
 
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
