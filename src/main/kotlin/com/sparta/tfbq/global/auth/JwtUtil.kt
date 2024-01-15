@@ -1,16 +1,19 @@
 package com.sparta.tfbq.global.auth
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.sparta.tfbq.auth.dto.response.JwtResponse
+import com.sparta.tfbq.auth.model.AUTHENTICATE_MEMBER
+import com.sparta.tfbq.auth.model.AuthenticatedMember
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import java.util.*
 
 object JwtUtil {
-
     private const val SECRET = "5v87n5ytf9c9wn9yfco8w7adh8whonca8f87"
 
     private val key = Keys.hmacShaKeyFor(SECRET.toByteArray())
+    private val objectMapper = ObjectMapper()
 
     fun createJwt(claims: Map<String, Any>): JwtResponse {
         val accessToken = createToken(claims, getExpireDateOfAccessToken())
@@ -34,6 +37,16 @@ object JwtUtil {
             .build()
             .parseClaimsJws(refreshToken)
             .body
+    }
+
+    fun getAuthenticateMember(accessToken: String): AuthenticatedMember {
+        val authenticateMemberJson = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(accessToken)
+            .body[AUTHENTICATE_MEMBER] as String
+
+        return objectMapper.readValue(authenticateMemberJson, AuthenticatedMember::class.java)
     }
 
     private fun getExpireDateOfAccessToken(): Date {
